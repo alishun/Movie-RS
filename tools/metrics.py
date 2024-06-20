@@ -1,4 +1,25 @@
+import numpy as np
 
+def calculate_rmse(pred, true):
+    """
+    Calculate Root Mean Squared Error on the given data.
+    
+    Parameters:
+        true (np.array): True values.
+        pred (np.array): Predictions.
+        
+    Returns:
+        float: The Mean Squared Error.
+    """
+    true = np.array(true)
+    pred = np.array(pred)
+    
+    # Calculate squared differences
+    se = (true - pred) ** 2
+    
+    # Calculate RMSE
+    mse = np.mean(se)
+    return np.sqrt(mse)
     
 def compute_accuracy(predicted, true):
     predicted = set(predicted)

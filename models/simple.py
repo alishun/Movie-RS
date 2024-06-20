@@ -1,5 +1,5 @@
 from sklearn.metrics.pairwise import cosine_similarity
-from metrics.simple import compute_accuracy, compute_coverage, compute_diversity, compute_novelty
+from tools.metrics import compute_accuracy, compute_coverage, compute_diversity, compute_novelty
 
 class NotTrainedError(Exception):
     """Exception raised when attempting to use a model that hasn't been trained yet."""
