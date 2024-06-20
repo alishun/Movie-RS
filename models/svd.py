@@ -32,6 +32,7 @@ class FunkSVD:
         Parameters:
             train_df (pandas.DataFrame): The training data.
         """
+        # Get the indicies to work with the vectors
         train_set = self._init_df(train_df)
         train_set_indices = np.array([(self.user_map[x[0]], self.item_map[x[1]], x[2]) for x in train_set])
 
@@ -41,6 +42,7 @@ class FunkSVD:
         
         self.global_mean = np.mean(train_set[:, 2])
         
+        # Loop through each step, updating vectors
         for step in range(self.n_steps):
             self.user_feat, self.item_feat, self.user_bias, self.item_bias = run(
                 train_set_indices, self.n_factors, self.lr, self.rg, self.global_mean,
@@ -74,6 +76,12 @@ class FunkSVD:
         return rating_predictions
 
     def plot_losses(self, save=False):
+        """
+        Plot the train and validation RMSE.
+        
+        Parameters:
+            save (boolean): Whether or not to save.
+        """
         steps = list(range(1, self.n_steps + 1))
         val_steps = list(range(1, self.n_steps + 1))
 
@@ -129,6 +137,9 @@ class FunkSVD:
         return df[['userId', 'movieId', 'rating']].values
         
     def _calculate_train_rmse(self, data):
+        """
+        Calculates the rmse of training data at each step.
+        """
         errors = []
         for user, item, rating in data:
             prediction = (self.global_mean +
@@ -160,6 +171,9 @@ class FunkSVD:
             return self.global_mean
 
     def _print_metrics(self, metrics):
+        """
+        Prints the metrics in a format for Latex.
+        """
         for metric, values in metrics.items():
             formatted_accuracies = " & ".join([f"{value:.4f}" for value in values])
             print(metric, formatted_accuracies)

@@ -2,7 +2,9 @@ from sklearn.metrics.pairwise import cosine_similarity
 from tools.metrics import compute_accuracy, compute_coverage, compute_diversity, compute_novelty
 
 class NotTrainedError(Exception):
-    """Exception raised when attempting to use a model that hasn't been trained yet."""
+    """
+    Exception raised when attempting to use a model that hasn't been trained yet.
+    """
     def __init__(self, message="The model must be trained before making predictions."):
         self.message = message
         super().__init__(self.message)
@@ -18,6 +20,9 @@ class SimpleRS:
         self.not_novel = None
     
     def _preprocess(self,df):
+        """
+        Initializes the not_novel set of movieIds and similarity matrix.
+        """
         rating_counts = df.groupby('movieId').size()
         popular_movies = rating_counts[rating_counts >= 16].index
         popular_movies_df = df[df['movieId'].isin(popular_movies)]
@@ -27,19 +32,27 @@ class SimpleRS:
         self.sim_matrix = cosine_similarity(user_item_matrix.T)
         
     def fit(self, train_df):
-        """Trains the recommender system by identifying the top-k popular movies."""
+        """
+        Trains the recommender system by identifying the top-k popular movies.
+        """
         self._preprocess(train_df)
         movie_counts = train_df['movieId'].value_counts()
         most_popular = movie_counts.index.values
         self.recs = most_popular[:self.k]
 
     def predict(self, test_df):
+        """
+        Returns predictions if model is fitted.
+        """
         if self.recs is None:
             raise NotImplementedError()
         self.test_data = test_df
         return self.recs
     
     def calculate_metrics(self, pred, true):
+        """
+        Calculates the accuracy, coverage, novelty, and diversity
+        """
         if self.recs is None:
             raise NotImplementedError()
         accuracy = 0

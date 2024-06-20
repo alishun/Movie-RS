@@ -9,7 +9,7 @@ def calculate_rmse(pred, true):
         pred (np.array): Predictions.
         
     Returns:
-        float: The Mean Squared Error.
+        float: The Root Mean Squared Error.
     """
     true = np.array(true)
     pred = np.array(pred)
@@ -22,6 +22,16 @@ def calculate_rmse(pred, true):
     return np.sqrt(mse)
     
 def compute_accuracy(predicted, true):
+    """
+    Calculate Precision on the given data.
+    
+    Parameters:
+        true (np.array): True values.
+        pred (np.array): Predictions.
+        
+    Returns:
+        float: The Precision.
+    """
     predicted = set(predicted)
     true = set(true)
     tp = len(true.intersection(predicted))
@@ -30,12 +40,32 @@ def compute_accuracy(predicted, true):
     return precision
 
 def compute_coverage(predicted, df):
+    """
+    Calculate Coverage on the given data.
+    
+    Parameters:
+        predicted (np.array): Predicted values.
+        df (pd.DataFrame): Total data.
+        
+    Returns:
+        float: The Coverage.
+    """
     filtered_df = df[df['movieId'].isin(predicted)]
     unique_users = filtered_df['userId'].nunique()
     total_unique_users = df['userId'].nunique()
     return unique_users/total_unique_users
     
 def compute_diversity(predicted, sim_matrix):
+    """
+    Calculate Diversity on the given data.
+    
+    Parameters:
+        predicted (np.array): Predicted values.
+        sim_matrix (np.array): Similarity matrix.
+        
+    Returns:
+        float: The Diversity.
+    """
     def sim_func(x: int, y: int):
         return (sim_matrix[x][y])
         
@@ -51,6 +81,16 @@ def compute_diversity(predicted, sim_matrix):
     return diversity
 
 def compute_novelty(pred, not_novel):
+    """
+    Calculate Novelty on the given data.
+    
+    Parameters:
+        pred (np.array): Predictions.
+        not_novel (set): Movies that are not novel (16+ ratings).
+        
+    Returns:
+        float: The Novelty.
+    """
     novel_movies = set(pred) - not_novel
     
     return (len(novel_movies) / len(pred))

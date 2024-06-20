@@ -1,4 +1,10 @@
 def print_metrics(metrics):
+    """
+    Prints metrics in format for Latex.
+    
+    Parameters:
+        metrics (dict): metrics to measure.
+    """
     combined_dict = {key: [] for key in metrics[0]}
     for d in metrics:
         for key, value in d.items():

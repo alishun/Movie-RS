@@ -1,6 +1,12 @@
 from models.simple import SimpleRS
 
 def _get_movie_dict(df):
+    """
+    Parameters:
+        df (pd.DataFrame): ratings data.
+    Returns:
+        dictionary: {movieId: {userId,},}
+    """
     return df.groupby('movieId')['userId'].apply(set).to_dict()
 
 class MaxCoverageRS(SimpleRS):
