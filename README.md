@@ -1,6 +1,6 @@
 # Recommendation System Project
 ## Description
-This project involves the development of a hybrid recommendation system using DCNv2 and evolutionary algorithms to optimize for accuracy, diversity, novelty, and user coverage. The models and testing code are implemented in Jupyter notebooks.
+This project involves the development of a hybrid recommendation system using DCNv2 and evolutionary algorithms to optimize for accuracy, diversity, novelty, and user coverage. The models are implemented in Python and tested with Jupyter Notebook.
 
 I have authored a research paper related to this project. If you are interested in reading it, please send me an email at [alisonluyin@gmail.com](mailto:alisonluyin@gmail.com) for access.
 
